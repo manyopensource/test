@@ -1,0 +1,24 @@
+AddDefaultCharset UTF-8
+DirectoryIndex index.php
+DirectorySlash Off
+RewriteEngine On
+RewriteBase /
+
+#RewriteCond %{HTTPS} off
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^/?(res)
+RewriteRule ^/?(fonts|css|img|js)/(.*)$ /res/$1/$2 [L]
+
+# remove trailing slashes
+RewriteRule (.*)/$ $1 [L,R=301]
+
+# add trailing slashes
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule .*[^/]$ $0/ [L,R=301]
+
+#RewriteCond %{REQUEST_FILENAME} !(tests)/ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php [QSA,L]
